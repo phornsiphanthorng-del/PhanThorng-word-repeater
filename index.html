@@ -1,128 +1,49 @@
-> Phorn Siphanthorng:
 <!DOCTYPE html>
 <html lang="km">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Word Repeater Pro</title>
+    <title>Word Repeater</title>
     <style>
-        :root {
-            --primary-color: #2563eb;
-            --bg-color: #f8fafc;
-        }
-        body { 
-            font-family: 'Inter', -apple-system, sans-serif; 
-            background-color: var(--bg-color);
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-            margin: 0;
-            min-height: 100vh;
-        }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-        }
-        h2 { color: #1e293b; text-align: center; margin-bottom: 25px; font-size: 22px; }
-        .input-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; color: #64748b; font-size: 14px; }
-        input { 
-            width: 100%; 
-            padding: 12px; 
-            border: 1.5px solid #e2e8f0; 
-            border-radius: 8px; 
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        input:focus { outline: none; border-color: var(--primary-color); }
-        button { 
-            width: 100%; 
-            padding: 14px; 
-            background-color: var(--primary-color); 
-            color: white; 
-            border: none; 
-            border-radius: 8px; 
-            font-size: 16px; 
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-            margin-top: 10px;
-        }
-        button:hover { background-color: #1d4ed8; }
-        #result { 
-            margin-top: 25px; 
-            padding-top: 20px;
-            border-top: 1px solid #f1f5f9;
-            flex: 1; /* allow to grow and push items up */
-            overflow-y: auto;
-            font-size: 16px;
-            color: #334155;
-            word-wrap: break-word; /* handle long words */
-        }
-        .line-item { margin-bottom: 5px; }
+        body { font-family: sans-serif; padding: 20px; line-height: 1.6; }
+        input { padding: 8px; margin: 5px; border: 1px solid #ccc; border-radius: 4px; }
+        button { padding: 8px 15px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        #result { margin-top: 20px; white-space: pre-wrap; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2>កម្មវិធីព្រីនពាក្យ</h2>
-        
-        <div class="input-group">
-            <label for="wordInput">បញ្ចូលពាក្យ</label>
-            <input type="text" id="wordInput" placeholder="សរសេរពាក្យនៅទីនេះ...">
-        </div>
-        
-        <div class="input-group">
-            <label for="countInput">ចំនួនដែលចង់ព្រីន</label>
-            <input type="number" id="countInput" value="10">
-        </div>
-        
-        <button id="generateButton" onclick="generateWords()">ចាប់ផ្តើមព្រីន</button>
+    <h2>កម្មវិធីព្រីនពាក្យ (Word Repeater)</h2>
+    
+    <label>បញ្ចូលពាក្យ:</label><br>
+    <input type="text" id="wordInput" placeholder="សរសេរពាក្យនៅទីនេះ..." size="30"><br>
+    
+    <label>បញ្ចូលចំនួនដែលចង់ព្រីន:</label><br>
+    <input type="number" id="countInput" value="1"><br>
+    
+    <button onclick="generateWords()">ព្រីនពាក្យ</button>
 
-        <div id="result">
-          <!-- Result content will be added here -->
-        </div>
-    </div>
+    <div id="result"></div>
 
     <script>
         function generateWords() {
-            // Get inputs explicitly and log them for debugging
-            let wordInput = document.getElementById('wordInput');
-            let countInput = document.getElementById('countInput');
-            let resultDisplay = document.getElementById('result');
+            // ទាញយកតម្លៃពី Input
+            let word = document.getElementById('wordInput').value;
+            let n = parseInt(document.getElementById('countInput').value);
+            let display = document.getElementById('result');
+            
+            // លុបលទ្ធផលចាស់ចេញ
+            display.innerHTML = "";
 
-            if (!wordInput ||!countInput || !resultDisplay) {
-                console.error("កំហុសក្នុងការស្វែងរកធាតុដែលចាំបាច់។");
-                return;
-            }
-
-            let word = wordInput.value.trim();
-            let n = parseInt(countInput.value);
-
-            console.log("Input word:", word);
-            console.log("Input count:", n);
-
-            // Clear previous results
-            resultDisplay.innerHTML = "";
-
-            if (word !== "" && !isNaN(n) && n > 0) {
+            // បង្កើត Loop ដូចក្នុង C++ របស់អ្នកដែរ
+            if (word !== "" && n > 0) {
                 let output = "";
                 for (let i = 1; i <= n; i++) {
-                    output += <div class="line-item">${i}. ${word}</div>;
-
-> Phorn Siphanthorng:
-}
-                resultDisplay.innerHTML = output;
-                console.log("លទ្ធផលត្រូវបានបង្កើតដោយជោគជ័យ។");
+                    output += i + ". " + word + "<br>";
+                }
+                display.innerHTML = output;
             } else {
-                console.warn("Input មិនត្រឹមត្រូវ។ សូមបញ្ចូលពាក្យ និងចំនួនឱ្យបានត្រឹមត្រូវ។");
-                resultDisplay.innerHTML = '<div style="color:red; text-align:center;">សូមបញ្ចូលពាក្យ និងចំនួនឱ្យបានត្រឹមត្រូវ។</div>';
+                alert("សូមបញ្ចូលពាក្យ និងចំនួនឱ្យបានត្រឹមត្រូវ!");
             }
         }
     </script>
