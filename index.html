@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <title>Word Repeater</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; line-height: 1.6; }
+        input { padding: 8px; margin: 5px; border: 1px solid #ccc; border-radius: 4px; }
+        button { padding: 8px 15px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        #result { margin-top: 20px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+
+    <h2>កម្មវិធីព្រីនពាក្យ (Word Repeater)</h2>
+    
+    <label>បញ្ចូលពាក្យ:</label><br>
+    <input type="text" id="wordInput" placeholder="សរសេរពាក្យនៅទីនេះ..." size="30"><br>
+    
+    <label>បញ្ចូលចំនួនដែលចង់ព្រីន:</label><br>
+    <input type="number" id="countInput" value="1"><br>
+    
+    <button onclick="generateWords()">ព្រីនពាក្យ</button>
+
+    <div id="result"></div>
+
+    <script>
+        function generateWords() {
+            // ទាញយកតម្លៃពី Input
+            let word = document.getElementById('wordInput').value;
+            let n = parseInt(document.getElementById('countInput').value);
+            let display = document.getElementById('result');
+            
+            // លុបលទ្ធផលចាស់ចេញ
+            display.innerHTML = "";
+
+            // បង្កើត Loop ដូចក្នុង C++ របស់អ្នកដែរ
+            if (word !== "" && n > 0) {
+                let output = "";
+                for (let i = 1; i <= n; i++) {
+                    output += i + ". " + word + "<br>";
+                }
+                display.innerHTML = output;
+            } else {
+                alert("សូមបញ្ចូលពាក្យ និងចំនួនឱ្យបានត្រឹមត្រូវ!");
+            }
+        }
+    </script>
+
+</body>
+</html>
