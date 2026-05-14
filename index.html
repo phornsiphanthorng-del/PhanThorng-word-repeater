@@ -1,8 +1,8 @@
+> Phorn Siphanthorng:
 <!DOCTYPE html>
 <html lang="km">
 <head>
     <meta charset="UTF-8">
-    <!-- បន្ថែមបន្ទាត់ខាងក្រោមនេះ ដើម្បីឱ្យវាឈប់ Zoom Out លើទូរសព្ទ -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Word Repeater Pro</title>
     <style>
@@ -17,6 +17,7 @@
             justify-content: center;
             padding: 20px;
             margin: 0;
+            min-height: 100vh;
         }
         .container {
             background: white;
@@ -25,6 +26,8 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 400px;
+            display: flex;
+            flex-direction: column;
         }
         h2 { color: #1e293b; text-align: center; margin-bottom: 25px; font-size: 22px; }
         .input-group { margin-bottom: 15px; }
@@ -56,11 +59,13 @@
             margin-top: 25px; 
             padding-top: 20px;
             border-top: 1px solid #f1f5f9;
-            max-height: 300px;
+            flex: 1; /* allow to grow and push items up */
             overflow-y: auto;
             font-size: 16px;
+            color: #334155;
+            word-wrap: break-word; /* handle long words */
         }
-        .line-item { margin-bottom: 5px; color: #334155; }
+        .line-item { margin-bottom: 5px; }
     </style>
 </head>
 <body>
@@ -69,36 +74,55 @@
         <h2>កម្មវិធីព្រីនពាក្យ</h2>
         
         <div class="input-group">
-            <label>បញ្ចូលពាក្យ</label>
+            <label for="wordInput">បញ្ចូលពាក្យ</label>
             <input type="text" id="wordInput" placeholder="សរសេរពាក្យនៅទីនេះ...">
         </div>
         
         <div class="input-group">
-            <label>ចំនួនដែលចង់ព្រីន</label>
+            <label for="countInput">ចំនួនដែលចង់ព្រីន</label>
             <input type="number" id="countInput" value="10">
         </div>
         
-        <button onclick="generateWords()">ចាប់ផ្តើមព្រីន</button>
+        <button id="generateButton" onclick="generateWords()">ចាប់ផ្តើមព្រីន</button>
 
-        <div id="result"></div>
+        <div id="result">
+          <!-- Result content will be added here -->
+        </div>
     </div>
 
     <script>
         function generateWords() {
-            let word = document.getElementById('wordInput').value;
-            let n = parseInt(document.getElementById('countInput').value);
-            let display = document.getElementById('result');
-            
-            display.innerHTML = "";
+            // Get inputs explicitly and log them for debugging
+            let wordInput = document.getElementById('wordInput');
+            let countInput = document.getElementById('countInput');
+            let resultDisplay = document.getElementById('result');
 
-            if (word.trim() !== "" && n > 0) {
+            if (!wordInput ||!countInput || !resultDisplay) {
+                console.error("កំហុសក្នុងការស្វែងរកធាតុដែលចាំបាច់។");
+                return;
+            }
+
+            let word = wordInput.value.trim();
+            let n = parseInt(countInput.value);
+
+            console.log("Input word:", word);
+            console.log("Input count:", n);
+
+            // Clear previous results
+            resultDisplay.innerHTML = "";
+
+            if (word !== "" && !isNaN(n) && n > 0) {
                 let output = "";
                 for (let i = 1; i <= n; i++) {
                     output += <div class="line-item">${i}. ${word}</div>;
-                }
-                display.innerHTML = output;
+
+> Phorn Siphanthorng:
+}
+                resultDisplay.innerHTML = output;
+                console.log("លទ្ធផលត្រូវបានបង្កើតដោយជោគជ័យ។");
             } else {
-                alert("សូមបញ្ចូលព័ត៌មានឱ្យបានគ្រប់គ្រាន់!");
+                console.warn("Input មិនត្រឹមត្រូវ។ សូមបញ្ចូលពាក្យ និងចំនួនឱ្យបានត្រឹមត្រូវ។");
+                resultDisplay.innerHTML = '<div style="color:red; text-align:center;">សូមបញ្ចូលពាក្យ និងចំនួនឱ្យបានត្រឹមត្រូវ។</div>';
             }
         }
     </script>
